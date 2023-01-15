@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-track-focus',
@@ -7,15 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TrackFocusComponent implements OnInit {
 
-  val!: number;
+  @ViewChild("track", { static: true }) track!: ElementRef;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-  }
-
-  focusRandomValue() {
-    this.val = Math.floor(Math.random() * 180);
+    fromEvent(this.track.nativeElement, 'focus')
+    .subscribe(res => console.log("Focus event"));
   }
 
 }
